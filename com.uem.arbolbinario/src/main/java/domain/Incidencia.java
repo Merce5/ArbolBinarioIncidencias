@@ -17,4 +17,6 @@ public class Incidencia {
     public int getCodigo() {
         return codigo;
     }
+
+    //hahahahahha
 }
