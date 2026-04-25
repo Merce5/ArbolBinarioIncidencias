@@ -1,9 +1,14 @@
 package domain;
 
+import java.util.HashMap;
+
 public class Incidencia {
 
     private final String nombre;
     private final int codigo;
+
+    private Incidencia izquierda;
+    private Incidencia derecha;
 
     public Incidencia(String nombre, int codigo) {
         this.nombre = nombre;
@@ -18,5 +23,31 @@ public class Incidencia {
         return codigo;
     }
 
-    //hahahahahha
+    public void setIzquierda(Incidencia izquierda) {
+        this.izquierda = izquierda;
+    }
+
+    public void setDerecha(Incidencia derecha) {
+        this.derecha = derecha;
+    }
+
+    public int anchura() {
+        HashMap<Integer, Integer> niveles = new HashMap<>();
+        calcularNivel(this, 0, niveles);
+
+        int max = 0;
+        for (int valor : niveles.values()) {
+            max = Math.max(max, valor);
+        }
+        return max;
+    }
+
+    private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, Integer> niveles) {
+        if (nodo == null) return;
+
+        niveles.put(nivel, niveles.getOrDefault(nivel, 0) + 1);
+
+        calcularNivel(nodo.izquierda, nivel + 1, niveles);
+        calcularNivel(nodo.derecha, nivel + 1, niveles);
+    }
 }
