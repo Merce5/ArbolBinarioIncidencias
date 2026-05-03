@@ -6,6 +6,7 @@ public class Incidencia {
 
     private final String nombre;
     private final int codigo;
+    private boolean encontrado = false;
 
     private Incidencia izquierda;
     private Incidencia derecha;
@@ -31,41 +32,71 @@ public class Incidencia {
         this.derecha = derecha;
     }
 
-    public void preorden(Incidencia nodo) {
+    public void setEncontrado(boolean encontrado) {
+        this.encontrado = encontrado;
+    }
+
+    public void preorden(Incidencia nodo, String objetivo) {
         if (nodo == null) {
             nodo = this;
+        }
+        if (nodo.nombre.equals(objetivo)) {
+            System.out.println("Objetivo encontrado nodo " + nodo.nombre);
+            return;
         }
         System.out.println("Visitamos nodo " + nodo.nombre);
         if (nodo.izquierda != null) {
-            preorden(nodo.izquierda);
+            preorden(nodo.izquierda, objetivo);
         }
         if (nodo.derecha != null) {
-            preorden(nodo.derecha);
+            preorden(nodo.derecha, objetivo);
         }
     }
 
-    public void inorden(Incidencia nodo){
+    public void inorden(Incidencia nodo, String objetivo){
         if (nodo == null) {
             nodo = this;
         }
         if (nodo.izquierda != null) {
-            inorden(nodo.izquierda);
+            inorden(nodo.izquierda, objetivo);
         }
-        System.out.println("Visitamos nodo " + nodo.nombre);
+        checkIfObjetivoEncontrado(nodo, objetivo);
         if (nodo.derecha != null) {
-            inorden(nodo.derecha);
+            inorden(nodo.derecha, objetivo);
         }
     }
 
-    public void postorden(Incidencia nodo){
+    private static void setEncontrado(Incidencia nodo) {
+        nodo.encontrado = true;
+        if (nodo.izquierda != null) {
+            nodo.izquierda.encontrado = true;
+        }
+        if (nodo.derecha != null) {
+            nodo.derecha.encontrado = true;
+        }
+    }
+
+    public void postorden(Incidencia nodo, String objetivo){
         if (nodo == null) {
             nodo = this;
         }
         if (nodo.izquierda != null) {
-            postorden(nodo.izquierda);
+            postorden(nodo.izquierda, objetivo);
         }
         if (nodo.derecha != null) {
-            postorden(nodo.derecha);
+            postorden(nodo.derecha, objetivo);
+        }
+        checkIfObjetivoEncontrado(nodo, objetivo);
+    }
+
+    private void checkIfObjetivoEncontrado(Incidencia nodo, String objetivo) {
+        if (nodo.nombre.equals(objetivo)) {
+            setEncontrado(nodo);
+            System.out.println("Objetivo encontrado nodo " + nodo.nombre);
+            return;
+        }
+        if (nodo.izquierda != null && nodo.izquierda.encontrado || nodo.derecha != null && nodo.derecha.encontrado) {
+            return;
         }
         System.out.println("Visitamos nodo " + nodo.nombre);
     }

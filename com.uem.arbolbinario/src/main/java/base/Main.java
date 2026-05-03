@@ -18,10 +18,10 @@ public class Main {
         System.out.println("Anchura:");
         System.out.println(incidenciaRaiz.anchura());
         System.out.println("Preorden:");
-        incidenciaRaiz.preorden(null);
+        incidenciaRaiz.preorden(null, "2");
         System.out.println("Inorden:");
-        incidenciaRaiz.inorden(null);
+        incidenciaRaiz.inorden(null, "1");
         System.out.println("Postorden:");
-        incidenciaRaiz.postorden(null);
+        incidenciaRaiz.postorden(null, "4");
     }
 }
