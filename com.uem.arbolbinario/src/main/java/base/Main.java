@@ -36,5 +36,6 @@ public class Main {
         var lista = new ArrayList<Incidencia>();
         incidenciaRaiz.contarHojas(null, lista);
         System.out.println("El total de nodos hojas es: " + lista.size() + ". Los nodos son: " + String.join(", ", lista.stream().map(Incidencia::getNombre).toList()));
+        System.out.println("Profundidad:" + incidenciaRaiz.calcularProfundidad());
     }
 }

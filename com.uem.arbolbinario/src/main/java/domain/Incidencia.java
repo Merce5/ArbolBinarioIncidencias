@@ -169,4 +169,10 @@ public class Incidencia {
             contarHojas(nodo.derecha, contador);
         }
     }
+
+    public int calcularProfundidad(){
+        HashMap<Integer, Integer> niveles = new HashMap<>();
+        calcularNivel(this, 0, niveles);
+        return niveles.size();
+    }
 }
