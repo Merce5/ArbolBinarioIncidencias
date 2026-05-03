@@ -55,6 +55,19 @@ public class Incidencia {
         }
     }
 
+    public void inorden(Incidencia nodo){
+        if (nodo == null) {
+            nodo = this;
+        }
+        if (nodo.izquierda != null) {
+            inorden(nodo.izquierda);
+        }
+        System.out.println("Visitamos nodo " + nodo.nombre);
+        if (nodo.derecha != null) {
+            inorden(nodo.derecha);
+        }
+    }
+
     private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, Integer> niveles) {
         if (nodo == null) return;
 
