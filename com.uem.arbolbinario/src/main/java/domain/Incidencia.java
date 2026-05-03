@@ -31,17 +31,6 @@ public class Incidencia {
         this.derecha = derecha;
     }
 
-    public int anchura() {
-        HashMap<Integer, Integer> niveles = new HashMap<>();
-        calcularNivel(this, 0, niveles);
-
-        int max = 0;
-        for (int valor : niveles.values()) {
-            max = Math.max(max, valor);
-        }
-        return max;
-    }
-
     public void preorden(Incidencia nodo) {
         if (nodo == null) {
             nodo = this;
@@ -66,6 +55,30 @@ public class Incidencia {
         if (nodo.derecha != null) {
             inorden(nodo.derecha);
         }
+    }
+
+    public void postorden(Incidencia nodo){
+        if (nodo == null) {
+            nodo = this;
+        }
+        if (nodo.izquierda != null) {
+            postorden(nodo.izquierda);
+        }
+        if (nodo.derecha != null) {
+            postorden(nodo.derecha);
+        }
+        System.out.println("Visitamos nodo " + nodo.nombre);
+    }
+
+    public int anchura() {
+        HashMap<Integer, Integer> niveles = new HashMap<>();
+        calcularNivel(this, 0, niveles);
+
+        int max = 0;
+        for (int valor : niveles.values()) {
+            max = Math.max(max, valor);
+        }
+        return max;
     }
 
     private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, Integer> niveles) {

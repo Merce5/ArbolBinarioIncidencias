@@ -15,9 +15,13 @@ public class Main {
         incidenciaRaiz.setIzquierda(incidencia1);       //      1        2
         incidenciaRaiz.setDerecha(incidencia2);         //     /          \
                                                         //    3            4
+        System.out.println("Anchura:");
         System.out.println(incidenciaRaiz.anchura());
+        System.out.println("Preorden:");
         incidenciaRaiz.preorden(null);
-        System.out.println("Inorden");
+        System.out.println("Inorden:");
         incidenciaRaiz.inorden(null);
+        System.out.println("Postorden:");
+        incidenciaRaiz.postorden(null);
     }
 }
