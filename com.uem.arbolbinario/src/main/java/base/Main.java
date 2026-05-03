@@ -17,5 +17,7 @@ public class Main {
                                                         //    3            4
         System.out.println(incidenciaRaiz.anchura());
         incidenciaRaiz.preorden(null);
+        System.out.println("Inorden");
+        incidenciaRaiz.inorden(null);
     }
 }
