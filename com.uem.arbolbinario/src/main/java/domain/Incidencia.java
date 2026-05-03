@@ -37,20 +37,53 @@ public class Incidencia {
         this.encontrado = encontrado;
     }
 
-    public void buscarEnPreorden(Incidencia nodo, String objetivo) {
+    public void preorden() {
+        System.out.println("Visitamos nodo " + this.nombre);
+        if (this.izquierda != null) {
+            this.izquierda.preorden();
+        }
+        if (this.derecha != null) {
+            this.derecha.preorden();
+        }
+    }
+
+    public void inorden(Incidencia nodo){
         if (nodo == null) {
             nodo = this;
         }
-        if (nodo.nombre.equals(objetivo)) {
-            System.out.println("Objetivo encontrado nodo " + nodo.nombre);
-            return;
+        if (nodo.izquierda != null) {
+            inorden(nodo.izquierda);
         }
         System.out.println("Visitamos nodo " + nodo.nombre);
+        if (nodo.derecha != null) {
+            inorden(nodo.derecha);
+        }
+    }
+
+    public void postorden(Incidencia nodo){
+        if (nodo == null) {
+            nodo = this;
+        }
         if (nodo.izquierda != null) {
-            buscarEnPreorden(nodo.izquierda, objetivo);
+            postorden(nodo.izquierda);
         }
         if (nodo.derecha != null) {
-            buscarEnPreorden(nodo.derecha, objetivo);
+            postorden(nodo.derecha);
+        }
+        System.out.println("Visitamos nodo " + nodo.nombre);
+    }
+
+    public void buscarEnPreorden(String objetivo) {
+        if (this.nombre.equals(objetivo)) {
+            System.out.println("Objetivo encontrado nodo " + this.nombre);
+            return;
+        }
+        System.out.println("Visitamos nodo " + this.nombre);
+        if (this.izquierda != null) {
+            this.izquierda.buscarEnPreorden(objetivo);
+        }
+        if (this.derecha != null) {
+            this.derecha.buscarEnPreorden(objetivo);
         }
     }
 

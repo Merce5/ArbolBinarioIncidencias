@@ -17,14 +17,21 @@ public class Main {
         incidenciaRaiz.setIzquierda(incidencia1);       //      1        2
         incidenciaRaiz.setDerecha(incidencia2);         //     /          \
                                                         //    3            4
-        System.out.println("Anchura:");
-        System.out.println(incidenciaRaiz.anchura());
         System.out.println("Preorden:");
-        incidenciaRaiz.buscarEnPreorden(null, "2");
+        incidenciaRaiz.preorden();
         System.out.println("Inorden:");
-        incidenciaRaiz.buscarEnInorden(null, "1");
+        incidenciaRaiz.inorden(null);
         System.out.println("Postorden:");
+        incidenciaRaiz.postorden(null);
+        System.out.println("----------------------------------------");
+        System.out.println("Buscar rreorden:");
+        incidenciaRaiz.buscarEnPreorden("2");
+        System.out.println("Buscar inorden:");
+        incidenciaRaiz.buscarEnInorden(null, "1");
+        System.out.println("Buscar postorden:");
         incidenciaRaiz.buscarEnPostorden(null, "4");
+        System.out.println("----------------------------------------");
+        System.out.println("Anchura:" + incidenciaRaiz.anchura());
         System.out.println("Contador de Hojas:");
         var lista = new ArrayList<Incidencia>();
         incidenciaRaiz.contarHojas(null, lista);
