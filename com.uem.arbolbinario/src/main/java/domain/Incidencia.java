@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Incidencia {
@@ -36,7 +37,7 @@ public class Incidencia {
         this.encontrado = encontrado;
     }
 
-    public void preorden(Incidencia nodo, String objetivo) {
+    public void buscarEnPreorden(Incidencia nodo, String objetivo) {
         if (nodo == null) {
             nodo = this;
         }
@@ -46,23 +47,23 @@ public class Incidencia {
         }
         System.out.println("Visitamos nodo " + nodo.nombre);
         if (nodo.izquierda != null) {
-            preorden(nodo.izquierda, objetivo);
+            buscarEnPreorden(nodo.izquierda, objetivo);
         }
         if (nodo.derecha != null) {
-            preorden(nodo.derecha, objetivo);
+            buscarEnPreorden(nodo.derecha, objetivo);
         }
     }
 
-    public void inorden(Incidencia nodo, String objetivo){
+    public void buscarEnInorden(Incidencia nodo, String objetivo){
         if (nodo == null) {
             nodo = this;
         }
         if (nodo.izquierda != null) {
-            inorden(nodo.izquierda, objetivo);
+            buscarEnInorden(nodo.izquierda, objetivo);
         }
         checkIfObjetivoEncontrado(nodo, objetivo);
         if (nodo.derecha != null) {
-            inorden(nodo.derecha, objetivo);
+            buscarEnInorden(nodo.derecha, objetivo);
         }
     }
 
@@ -76,15 +77,15 @@ public class Incidencia {
         }
     }
 
-    public void postorden(Incidencia nodo, String objetivo){
+    public void buscarEnPostorden(Incidencia nodo, String objetivo){
         if (nodo == null) {
             nodo = this;
         }
         if (nodo.izquierda != null) {
-            postorden(nodo.izquierda, objetivo);
+            buscarEnPostorden(nodo.izquierda, objetivo);
         }
         if (nodo.derecha != null) {
-            postorden(nodo.derecha, objetivo);
+            buscarEnPostorden(nodo.derecha, objetivo);
         }
         checkIfObjetivoEncontrado(nodo, objetivo);
     }
@@ -119,5 +120,20 @@ public class Incidencia {
 
         calcularNivel(nodo.izquierda, nivel + 1, niveles);
         calcularNivel(nodo.derecha, nivel + 1, niveles);
+    }
+
+    public void contarHojas(Incidencia nodo, ArrayList<Incidencia> contador){
+        if (nodo == null) {
+            nodo = this;
+        }
+        if (nodo.izquierda == null && nodo.derecha == null){
+            contador.add(nodo);
+        }
+        if (nodo.izquierda != null) {
+            contarHojas(nodo.izquierda, contador);
+        }
+        if (nodo.derecha != null) {
+            contarHojas(nodo.derecha, contador);
+        }
     }
 }

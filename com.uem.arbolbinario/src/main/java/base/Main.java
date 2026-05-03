@@ -2,6 +2,8 @@ package base;
 
 import domain.Incidencia;
 
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         var incidenciaRaiz = new Incidencia("Root", 0);
@@ -18,10 +20,14 @@ public class Main {
         System.out.println("Anchura:");
         System.out.println(incidenciaRaiz.anchura());
         System.out.println("Preorden:");
-        incidenciaRaiz.preorden(null, "2");
+        incidenciaRaiz.buscarEnPreorden(null, "2");
         System.out.println("Inorden:");
-        incidenciaRaiz.inorden(null, "1");
+        incidenciaRaiz.buscarEnInorden(null, "1");
         System.out.println("Postorden:");
-        incidenciaRaiz.postorden(null, "4");
+        incidenciaRaiz.buscarEnPostorden(null, "4");
+        System.out.println("Contador de Hojas:");
+        var lista = new ArrayList<Incidencia>();
+        incidenciaRaiz.contarHojas(null, lista);
+        System.out.println("El total de nodos hojas es: " + lista.size() + ". Los nodos son: " + String.join(", ", lista.stream().map(Incidencia::getNombre).toList()));
     }
 }
