@@ -42,6 +42,19 @@ public class Incidencia {
         return max;
     }
 
+    public void preorden(Incidencia nodo) {
+        if (nodo == null) {
+            nodo = this;
+        }
+        System.out.println("Visitamos nodo " + nodo.nombre);
+        if (nodo.izquierda != null) {
+            preorden(nodo.izquierda);
+        }
+        if (nodo.derecha != null) {
+            preorden(nodo.derecha);
+        }
+    }
+
     private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, Integer> niveles) {
         if (nodo == null) return;
 
