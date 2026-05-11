@@ -23,7 +23,7 @@ public class ArbolIncidenciaSecuencial {
                 if (posicion == 2 * indicePadre + 1){
                     nodos[indicePadre].setIzquierda(incidencia);
                 } else {
-                    nodos[indicePadre].setDerecha(ingit cidencia);
+                    nodos[indicePadre].setDerecha(ingit incidencia);
                 }
             }
         }

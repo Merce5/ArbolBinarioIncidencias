@@ -2,6 +2,8 @@ package base;
 
 import domain.ArbolIncidenciaSecuencial;
 import domain.Incidencia;
+import services.ArbloIncidenciasDinamico;
+import services.MenuService;
 
 import java.util.ArrayList;
 
@@ -91,6 +93,31 @@ public class Main {
 
         int totalHojas = arbol.contarHojas();
         System.out.println("Numero de hojas:" + totalHojas);
+        
+        //ARBOL INCIDENCIA SECUENCIAL
+        var dinamico = new ArbloIncidenciasDinamico();
+        var root = new Incidencia("Incidencias", 100);
+        root = dinamico.insertar(null, new Incidencia("Incidencias", 100));
+        root = dinamico.insertar(root, new Incidencia("Hardware", 50));
+        root = dinamico.insertar(root, new Incidencia("Software", 150));
+        root = dinamico.insertar(root, new Incidencia("Equipo", 30));
+        root = dinamico.insertar(root, new Incidencia("Red", 70));
+        root = dinamico.insertar(root, new Incidencia("Pantalla", 20));
+        root = dinamico.insertar(root, new Incidencia("Router", 60));
+        root = dinamico.insertar(root, new Incidencia("Sistema", 125));
+        root = dinamico.insertar(root, new Incidencia("Aplicación", 175));
+        root = dinamico.insertar(root, new Incidencia("Login", 110));
+        root = dinamico.insertar(root, new Incidencia("Correo", 160));
+        System.out.println("---------- PREORDEN DINAMICO ----------");
+        root.preorden();
+        System.out.println("---------- INORDEN DINAMICO ----------");
+        root.inorden();
+        System.out.println("---------- POSTORDEN DINAMICO ----------");
+        root.postorden();
+        System.out.println("---------- ANCHURA DINAMICO ----------");
+        root.anchura();
+        var menu = new MenuService(root, dinamico);
+        menu.menu();
     }
 }
 

@@ -2,12 +2,13 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Incidencia {
 
     private final String nombre;
     private final int codigo;
-    private boolean encontrado = false;
 
     private Incidencia izquierda;
     private Incidencia derecha;
@@ -29,127 +30,111 @@ public class Incidencia {
         this.izquierda = izquierda;
     }
 
+    public Incidencia getIzquierda() {
+        return izquierda;
+    }
+
     public void setDerecha(Incidencia derecha) {
         this.derecha = derecha;
     }
 
-    public void setEncontrado(boolean encontrado) {
-        this.encontrado = encontrado;
+    public Incidencia getDerecha() {
+        return derecha;
     }
 
     public void preorden() {
-        System.out.println("Visitamos nodo " + this.nombre);
+        System.out.println(this.nombre);
         if (this.izquierda != null) {
+            System.out.printf("%sI -> ", "  ".repeat(5 - this.calcularProfundidad()));
             this.izquierda.preorden();
         }
         if (this.derecha != null) {
+            System.out.printf("%sD -> ", "  ".repeat(5 - this.calcularProfundidad()));
             this.derecha.preorden();
         }
     }
 
-    public void inorden(Incidencia nodo){
-        if (nodo == null) {
-            nodo = this;
-        }
-        if (nodo.izquierda != null) {
-            inorden(nodo.izquierda);
-        }
-        System.out.println("Visitamos nodo " + nodo.nombre);
-        if (nodo.derecha != null) {
-            inorden(nodo.derecha);
-        }
-    }
-
-    public void postorden(Incidencia nodo){
-        if (nodo == null) {
-            nodo = this;
-        }
-        if (nodo.izquierda != null) {
-            postorden(nodo.izquierda);
-        }
-        if (nodo.derecha != null) {
-            postorden(nodo.derecha);
-        }
-        System.out.println("Visitamos nodo " + nodo.nombre);
-    }
-
-    public void buscarEnPreorden(String objetivo) {
-        if (this.nombre.equals(objetivo)) {
-            System.out.println("Objetivo encontrado nodo " + this.nombre);
-            return;
+    public void inorden(){
+        if (this.izquierda != null) {
+            this.izquierda.inorden();
         }
         System.out.println("Visitamos nodo " + this.nombre);
+        if (this.derecha != null) {
+            this.derecha.inorden();
+        }
+    }
+
+    public void postorden(){
         if (this.izquierda != null) {
-            this.izquierda.buscarEnPreorden(objetivo);
+            this.izquierda.postorden();
         }
         if (this.derecha != null) {
-            this.derecha.buscarEnPreorden(objetivo);
+            this.derecha.postorden();
         }
+        System.out.println("Visitamos nodo " + this.nombre);
     }
 
-    public void buscarEnInorden(Incidencia nodo, String objetivo){
-        if (nodo == null) {
-            nodo = this;
+    public boolean buscarEnPreorden(String objetivo) {
+        System.out.println("Visitamos nodo " + this.getNombre());
+        if (this.getNombre().equals(objetivo)) {
+            System.out.println("Objetivo encontrado nodo " + this.getNombre());
+            return true;
         }
-        if (nodo.izquierda != null) {
-            buscarEnInorden(nodo.izquierda, objetivo);
+        if (this.getIzquierda() != null && this.getIzquierda().buscarEnPreorden(objetivo)) {
+            return true;
         }
-        checkIfObjetivoEncontrado(nodo, objetivo);
-        if (nodo.derecha != null) {
-            buscarEnInorden(nodo.derecha, objetivo);
-        }
+        return this.getDerecha() != null && this.getDerecha().buscarEnPreorden(objetivo);
     }
 
-    private static void setEncontrado(Incidencia nodo) {
-        nodo.encontrado = true;
-        if (nodo.izquierda != null) {
-            nodo.izquierda.encontrado = true;
+    public boolean buscarEnInorden(String objetivo) {
+        if (this.getIzquierda() != null && this.getIzquierda().buscarEnInorden(objetivo)) {
+            return true;
         }
-        if (nodo.derecha != null) {
-            nodo.derecha.encontrado = true;
+        System.out.println("Visitamos nodo " + this.getNombre());
+        if (this.getNombre().equals(objetivo)) {
+            System.out.println("Objetivo encontrado nodo " + this.getNombre());
+            return true;
         }
+        return this.getDerecha() != null && this.getDerecha().buscarEnInorden(objetivo);
     }
 
-    public void buscarEnPostorden(Incidencia nodo, String objetivo){
-        if (nodo == null) {
-            nodo = this;
+    public boolean buscarEnPostorden(String objetivo){
+        if (this.getIzquierda() != null && this.getIzquierda().buscarEnPostorden(objetivo)) {
+            return true;
         }
-        if (nodo.izquierda != null) {
-            buscarEnPostorden(nodo.izquierda, objetivo);
+        if (this.getDerecha() != null && this.getDerecha().buscarEnPostorden(objetivo)) {
+            return true;
         }
-        if (nodo.derecha != null) {
-            buscarEnPostorden(nodo.derecha, objetivo);
+        System.out.println("Visitamos nodo " + this.getNombre());
+        if (this.getNombre().equals(objetivo)) {
+            System.out.println("Objetivo encontrado nodo " + this.getNombre());
+            return true;
         }
-        checkIfObjetivoEncontrado(nodo, objetivo);
-    }
-
-    private void checkIfObjetivoEncontrado(Incidencia nodo, String objetivo) {
-        if (nodo.nombre.equals(objetivo)) {
-            setEncontrado(nodo);
-            System.out.println("Objetivo encontrado nodo " + nodo.nombre);
-            return;
-        }
-        if (nodo.izquierda != null && nodo.izquierda.encontrado || nodo.derecha != null && nodo.derecha.encontrado) {
-            return;
-        }
-        System.out.println("Visitamos nodo " + nodo.nombre);
+        return false;
     }
 
     public int anchura() {
-        HashMap<Integer, Integer> niveles = new HashMap<>();
+        LinkedHashMap<Integer, List<Incidencia>> niveles = new LinkedHashMap<>();
         calcularNivel(this, 0, niveles);
 
         int max = 0;
-        for (int valor : niveles.values()) {
-            max = Math.max(max, valor);
+        for (var valor : niveles.values()) {
+            max = Math.max(max, valor.size());
+        }
+        for (var valor : niveles.values()) {
+            System.out.println(String.join(" - ", valor.stream().map(Incidencia::getNombre).toList()));
         }
         return max;
     }
 
-    private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, Integer> niveles) {
-        if (nodo == null) return;
+    private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, List<Incidencia>> niveles) {
+        if (nodo == null) {
+            return;
+        }
 
-        niveles.put(nivel, niveles.getOrDefault(nivel, 0) + 1);
+        var nivelValue = niveles.getOrDefault(nivel, new ArrayList<>());
+        nivelValue.add(nodo);
+        niveles.put(nivel, nivelValue);
 
         calcularNivel(nodo.izquierda, nivel + 1, niveles);
         calcularNivel(nodo.derecha, nivel + 1, niveles);
@@ -171,7 +156,7 @@ public class Incidencia {
     }
 
     public int calcularProfundidad(){
-        HashMap<Integer, Integer> niveles = new HashMap<>();
+        HashMap<Integer, List<Incidencia>> niveles = new HashMap<>();
         calcularNivel(this, 0, niveles);
         return niveles.size();
     }
