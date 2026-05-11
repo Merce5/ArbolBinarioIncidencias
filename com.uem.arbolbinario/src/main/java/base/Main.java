@@ -1,5 +1,6 @@
 package base;
 
+import domain.ArbolIncidenciaSecuencial;
 import domain.Incidencia;
 
 import java.util.ArrayList;
@@ -37,5 +38,59 @@ public class Main {
         incidenciaRaiz.contarHojas(null, lista);
         System.out.println("El total de nodos hojas es: " + lista.size() + ". Los nodos son: " + String.join(", ", lista.stream().map(Incidencia::getNombre).toList()));
         System.out.println("Profundidad:" + incidenciaRaiz.calcularProfundidad());
+
+        //ARBOL INCIDENCIA SECUENCIAL
+        ArbolIncidenciaSecuencial arbol = new ArbolIncidenciaSecuencial(15);
+        Incidencia incidencias = new Incidencia("Incidencias", 0);
+        Incidencia hardware = new Incidencia("Hardware", 1);
+        Incidencia software = new Incidencia("Software", 2);
+        Incidencia equipo = new Incidencia("Equipo", 3);
+        Incidencia red = new Incidencia("Red", 4);
+        Incidencia sistema = new Incidencia("Sistema", 5);
+        Incidencia aplicacion = new Incidencia("Aplicacion", 6);
+        Incidencia pantalla = new Incidencia("Pantalla", 7);
+        Incidencia router = new Incidencia("Router", 9);
+        Incidencia login = new Incidencia("Login", 11);
+        Incidencia correo = new Incidencia("Correo", 13);
+
+        arbol.insertar(incidencias, 0);
+        arbol.insertar(hardware, 1);
+        arbol.insertar(software, 2);
+        arbol.insertar(equipo, 3);
+        arbol.insertar(red, 4);
+        arbol.insertar(sistema, 5);
+        arbol.insertar(aplicacion, 6);
+        arbol.insertar(pantalla, 7);
+        arbol.insertar(router, 9);
+        arbol.insertar(login, 11);
+        arbol.insertar(correo, 13);
+
+        System.out.println("Preorden");
+        arbol.preorden();
+        System.out.println("Inorden");
+        arbol.inorden();
+        System.out.println("Postorden");
+        arbol.postorden();
+        System.out.println("Anchura");
+        arbol.anchura();
+
+        String [] objetivos = {"Correo", "Router"};
+        for (String objetivo : objetivos) {
+            System.out.println("Buscando" + objetivo + " en preorden");
+            arbol.getRaiz().buscarEnPreorden(objetivo);
+
+            Incidencia encontrado = arbol.buscarPorNombre(objetivo);
+            if (encontrado != null){
+                int posicion = encontrado.getCodigo();
+                boolean hoja = arbol.esHoja(posicion);
+                System.out.println( objetivo + " es nodo hoja? " + (hoja ? "Sí" : "No"));
+            } else {
+                System.out.println("Incidencia '" + objetivo + "' no encontrada.");
+                }
+        }
+
+        int totalHojas = arbol.contarHojas();
+        System.out.println("Numero de hojas:" + totalHojas);
     }
 }
+
