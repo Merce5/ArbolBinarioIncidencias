@@ -14,6 +14,8 @@ public class MenuService {
         this.root = root;
         this.dinamico = dinamico;
     }
+
+    // Menú para poder realizar las operaciones deseadas
     public void menu() {
         String opcionS;
         int opcion;
