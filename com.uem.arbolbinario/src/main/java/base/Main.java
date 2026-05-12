@@ -58,15 +58,18 @@ public class Main {
         System.out.println("---------- ANCHURA SECUENCIAL ----------");
         arbol.anchura();
         System.out.println("---------- BUSCAR SECUENCIAL ----------");
+        // Se inicilizan dos objetivos de las incidencias de nuestro arbol.
         String [] objetivos = {"Correo", "Router"};
+        // Logica de busqueda de objetivos
         for (String objetivo : objetivos) {
             System.out.println("Buscando" + objetivo + " en preorden");
-            arbol.getRaiz().buscarEnPreorden(objetivo);
+            arbol.getRaiz().buscarEnPreorden(objetivo); // Empieza busqueda en preorden de los dos objetivos
 
             Incidencia encontrado = arbol.buscarPorNombre(objetivo);
-            if (encontrado != null){
-                int posicion = encontrado.getCodigo();
-                boolean hoja = arbol.esHoja(posicion);
+
+            if (encontrado != null){ // Si el objetivo no es null
+                int posicion = encontrado.getCodigo(); // Posicion donde se encuentra en el arbol
+                boolean hoja = arbol.esHoja(posicion); // Si es nodo hoja o no
                 System.out.println( objetivo + " es nodo hoja? " + (hoja ? "Sí" : "No"));
             } else {
                 System.out.println("Incidencia '" + objetivo + "' no encontrada.");

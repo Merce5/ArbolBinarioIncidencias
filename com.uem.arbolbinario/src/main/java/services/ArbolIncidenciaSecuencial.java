@@ -8,12 +8,12 @@ public class ArbolIncidenciaSecuencial {
 
     private final Incidencia[] nodos;
     private final int capacidad;
-
+    // Constructor de ArbolIncidenciaSecuencial con sus respectivos parametros
     public ArbolIncidenciaSecuencial (int capacidad){
         this.capacidad = capacidad;
         this.nodos = new Incidencia[capacidad];
     }
-
+    // Metodo insertar para las incidencias del arbol
     public void insertar(Incidencia incidencia, int posicion) {
         if (posicion < 0 || posicion >= capacidad) {
             System.out.println("Posicion fuera de rango");
@@ -38,11 +38,11 @@ public class ArbolIncidenciaSecuencial {
             incidencia.setDerecha(nodos[hijoDerecho]);
         }
     }
-
+    // Metodo para marcar la raiz del arbol
     public Incidencia getRaiz() {
         return nodos[0];
     }
-
+    // Metodo para encontrar las incidencias de nuestro arbol en sus respectivos nodos
     public Incidencia buscarPorNombre(String nombre) {
         for (Incidencia nodo : nodos){
             if (nodo != null && nodo.getNombre().equals(nombre)){
@@ -51,7 +51,7 @@ public class ArbolIncidenciaSecuencial {
         }
         return null;
     }
-
+    // Metodo para determinar si un nodo es hoja o no
     public boolean esHoja(int posicion) {
         if (posicion < 0 || posicion >= capacidad || nodos[posicion] == null) {
             System.out.println("Posicion fuera de rango");
@@ -64,6 +64,7 @@ public class ArbolIncidenciaSecuencial {
         return sinIzquierdo && sinDerecho;
     }
 
+    // Metodo para contar todos los nodos hojas de nuestro arbol
     public int contarHojas() {
         if(getRaiz() == null) return 0;
         ArrayList<Incidencia> lista = new ArrayList<>();
@@ -82,7 +83,7 @@ public class ArbolIncidenciaSecuencial {
         if (getRaiz() == null) return 0;
         return getRaiz().calcularProfundidad();
     }
-
+    // Metodos de recorrido de nuestro arbol
     public void preorden() {
         if (getRaiz() == null) return;
         getRaiz().preorden();
