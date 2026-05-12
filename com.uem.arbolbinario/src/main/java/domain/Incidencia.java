@@ -42,6 +42,7 @@ public class Incidencia {
         return derecha;
     }
 
+    // Raíz -> Izquierda -> Derecha
     public void preorden() {
         System.out.println(this.nombre);
         if (this.izquierda != null) {
@@ -54,6 +55,7 @@ public class Incidencia {
         }
     }
 
+    // Izquierda -> Raíz -> Derecha
     public void inorden(){
         if (this.izquierda != null) {
             this.izquierda.inorden();
@@ -64,6 +66,7 @@ public class Incidencia {
         }
     }
 
+    // Izquierda -> Derecha -> Raíz
     public void postorden(){
         if (this.izquierda != null) {
             this.izquierda.postorden();
@@ -74,6 +77,8 @@ public class Incidencia {
         System.out.println("Visitamos nodo " + this.nombre);
     }
 
+    // Controlamos con el método recursivo si se ha encontrado el objetivo siguiendo
+    //  los mismos métodos de inorden, preorden y postorden descritos anteriormente
     public boolean buscarEnPreorden(String objetivo) {
         System.out.println("Visitamos nodo " + this.getNombre());
         if (this.getNombre().equals(objetivo)) {
@@ -113,6 +118,21 @@ public class Incidencia {
         return false;
     }
 
+    // Creamos un hash map para saber en que nivel nos encontramos, sumando un nivel cada vez que nos desplazamos a la izquierda o a la dercha
+    private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, List<Incidencia>> niveles) {
+        if (nodo == null) {
+            return;
+        }
+
+        var nivelValue = niveles.getOrDefault(nivel, new ArrayList<>());
+        nivelValue.add(nodo);
+        niveles.put(nivel, nivelValue);
+
+        calcularNivel(nodo.izquierda, nivel + 1, niveles);
+        calcularNivel(nodo.derecha, nivel + 1, niveles);
+    }
+
+    // Miramos el máximo de nodos por nivel utilizando el método calcularNivel
     public int anchura() {
         LinkedHashMap<Integer, List<Incidencia>> niveles = new LinkedHashMap<>();
         calcularNivel(this, 0, niveles);
@@ -127,19 +147,14 @@ public class Incidencia {
         return max;
     }
 
-    private void calcularNivel(Incidencia nodo, int nivel, HashMap<Integer, List<Incidencia>> niveles) {
-        if (nodo == null) {
-            return;
-        }
-
-        var nivelValue = niveles.getOrDefault(nivel, new ArrayList<>());
-        nivelValue.add(nodo);
-        niveles.put(nivel, nivelValue);
-
-        calcularNivel(nodo.izquierda, nivel + 1, niveles);
-        calcularNivel(nodo.derecha, nivel + 1, niveles);
+    // Miramos el size del hash map para saber cuantos niveles tenemos
+    public int calcularProfundidad(){
+        HashMap<Integer, List<Incidencia>> niveles = new HashMap<>();
+        calcularNivel(this, 0, niveles);
+        return niveles.size();
     }
 
+    // Sabemos que un nodo es hoja cuando no tenemos ningún nodo ni a la izquierda ni a la derecha, entonces sumamos uno
     public void contarHojas(Incidencia nodo, ArrayList<Incidencia> contador){
         if (nodo == null) {
             nodo = this;
@@ -153,11 +168,5 @@ public class Incidencia {
         if (nodo.derecha != null) {
             contarHojas(nodo.derecha, contador);
         }
-    }
-
-    public int calcularProfundidad(){
-        HashMap<Integer, List<Incidencia>> niveles = new HashMap<>();
-        calcularNivel(this, 0, niveles);
-        return niveles.size();
     }
 }

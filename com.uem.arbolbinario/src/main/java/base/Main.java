@@ -1,59 +1,41 @@
 package base;
 
-import domain.ArbolIncidenciaSecuencial;
+import services.ArbolIncidenciaSecuencial;
 import domain.Incidencia;
 import services.ArbloIncidenciasDinamico;
 import services.MenuService;
 
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
-        var incidenciaRaiz = new Incidencia("Root", 0);
-        var incidencia1 = new Incidencia("1", 1);
-        var incidencia2 = new Incidencia("2", 2);
-        var incidencia3 = new Incidencia("3", 3);
-        var incidencia4 = new Incidencia("4", 4);
 
-        incidencia1.setIzquierda(incidencia3);          //         Root
-        incidencia2.setDerecha(incidencia4);            //       /      \
-        incidenciaRaiz.setIzquierda(incidencia1);       //      1        2
-        incidenciaRaiz.setDerecha(incidencia2);         //     /          \
-                                                        //    3            4
-        System.out.println("Preorden:");
-        incidenciaRaiz.preorden();
-        System.out.println("Inorden:");
-        incidenciaRaiz.inorden(null);
-        System.out.println("Postorden:");
-        incidenciaRaiz.postorden(null);
-        System.out.println("----------------------------------------");
-        System.out.println("Buscar rreorden:");
-        incidenciaRaiz.buscarEnPreorden("2");
-        System.out.println("Buscar inorden:");
-        incidenciaRaiz.buscarEnInorden(null, "1");
-        System.out.println("Buscar postorden:");
-        incidenciaRaiz.buscarEnPostorden(null, "4");
-        System.out.println("----------------------------------------");
-        System.out.println("Anchura:" + incidenciaRaiz.anchura());
-        System.out.println("Contador de Hojas:");
-        var lista = new ArrayList<Incidencia>();
-        incidenciaRaiz.contarHojas(null, lista);
-        System.out.println("El total de nodos hojas es: " + lista.size() + ". Los nodos son: " + String.join(", ", lista.stream().map(Incidencia::getNombre).toList()));
-        System.out.println("Profundidad:" + incidenciaRaiz.calcularProfundidad());
+        var dinamico = new ArbloIncidenciasDinamico();
+        var incidencias = new Incidencia("Incidencias", 100);
+        var hardware = new Incidencia("Hardware", 50);
+        var software = new Incidencia("Software", 150);
+        var equipo = new Incidencia("Equipo", 30);
+        var red = new Incidencia("Red", 70);
+        var sistema = new Incidencia("Pantalla", 20);
+        var aplicacion = new Incidencia("Router", 60);
+        var pantalla = new Incidencia("Sistema", 125);
+        var router = new Incidencia("Aplicación", 175);
+        var login = new Incidencia("Login", 110);
+        var correo = new Incidencia("Correo", 160);
+
+        var root = new Incidencia("Incidencias", 100);
+        root = dinamico.insertar(null, incidencias);
+        root = dinamico.insertar(root, hardware);
+        root = dinamico.insertar(root, software);
+        root = dinamico.insertar(root, equipo);
+        root = dinamico.insertar(root, red);
+        root = dinamico.insertar(root, sistema);
+        root = dinamico.insertar(root, aplicacion);
+        root = dinamico.insertar(root, pantalla);
+        root = dinamico.insertar(root, router);
+        root = dinamico.insertar(root, login);
+        root = dinamico.insertar(root, correo);
 
         //ARBOL INCIDENCIA SECUENCIAL
         ArbolIncidenciaSecuencial arbol = new ArbolIncidenciaSecuencial(15);
-        Incidencia incidencias = new Incidencia("Incidencias", 0);
-        Incidencia hardware = new Incidencia("Hardware", 1);
-        Incidencia software = new Incidencia("Software", 2);
-        Incidencia equipo = new Incidencia("Equipo", 3);
-        Incidencia red = new Incidencia("Red", 4);
-        Incidencia sistema = new Incidencia("Sistema", 5);
-        Incidencia aplicacion = new Incidencia("Aplicacion", 6);
-        Incidencia pantalla = new Incidencia("Pantalla", 7);
-        Incidencia router = new Incidencia("Router", 9);
-        Incidencia login = new Incidencia("Login", 11);
-        Incidencia correo = new Incidencia("Correo", 13);
 
         arbol.insertar(incidencias, 0);
         arbol.insertar(hardware, 1);
@@ -67,15 +49,15 @@ public class Main {
         arbol.insertar(login, 11);
         arbol.insertar(correo, 13);
 
-        System.out.println("Preorden");
+        System.out.println("---------- PREORDEN SECUENCIAL ----------");
         arbol.preorden();
-        System.out.println("Inorden");
+        System.out.println("---------- INORDEN SECUENCIAL ----------");
         arbol.inorden();
-        System.out.println("Postorden");
+        System.out.println("---------- POSTORDEN SECUENCIAL ----------");
         arbol.postorden();
-        System.out.println("Anchura");
+        System.out.println("---------- ANCHURA SECUENCIAL ----------");
         arbol.anchura();
-
+        System.out.println("---------- BUSCAR SECUENCIAL ----------");
         String [] objetivos = {"Correo", "Router"};
         for (String objetivo : objetivos) {
             System.out.println("Buscando" + objetivo + " en preorden");
@@ -91,23 +73,11 @@ public class Main {
                 }
         }
 
+        System.out.println("---------- CONTAR HOJAS SECUENCIAL ----------");
         int totalHojas = arbol.contarHojas();
-        System.out.println("Numero de hojas:" + totalHojas);
-        
-        //ARBOL INCIDENCIA SECUENCIAL
-        var dinamico = new ArbloIncidenciasDinamico();
-        var root = new Incidencia("Incidencias", 100);
-        root = dinamico.insertar(null, new Incidencia("Incidencias", 100));
-        root = dinamico.insertar(root, new Incidencia("Hardware", 50));
-        root = dinamico.insertar(root, new Incidencia("Software", 150));
-        root = dinamico.insertar(root, new Incidencia("Equipo", 30));
-        root = dinamico.insertar(root, new Incidencia("Red", 70));
-        root = dinamico.insertar(root, new Incidencia("Pantalla", 20));
-        root = dinamico.insertar(root, new Incidencia("Router", 60));
-        root = dinamico.insertar(root, new Incidencia("Sistema", 125));
-        root = dinamico.insertar(root, new Incidencia("Aplicación", 175));
-        root = dinamico.insertar(root, new Incidencia("Login", 110));
-        root = dinamico.insertar(root, new Incidencia("Correo", 160));
+        System.out.println("Numero de hojas secuencial:" + totalHojas);
+
+        //ARBOL INCIDENCIA DINAMICO
         System.out.println("---------- PREORDEN DINAMICO ----------");
         root.preorden();
         System.out.println("---------- INORDEN DINAMICO ----------");

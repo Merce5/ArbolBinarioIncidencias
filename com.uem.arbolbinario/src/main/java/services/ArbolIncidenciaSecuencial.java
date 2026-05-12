@@ -1,4 +1,6 @@
-package domain;
+package services;
+
+import domain.Incidencia;
 
 import java.util.ArrayList;
 
@@ -23,7 +25,7 @@ public class ArbolIncidenciaSecuencial {
                 if (posicion == 2 * indicePadre + 1){
                     nodos[indicePadre].setIzquierda(incidencia);
                 } else {
-                    nodos[indicePadre].setDerecha(ingit incidencia);
+                    nodos[indicePadre].setDerecha(incidencia);
                 }
             }
         }
@@ -87,11 +89,11 @@ public class ArbolIncidenciaSecuencial {
     }
     public void inorden() {
         if (getRaiz() == null) return;
-        getRaiz().inorden(null);
+        getRaiz().inorden();
     }
     public void postorden() {
         if (getRaiz() == null) return;
-        getRaiz().postorden(null);
+        getRaiz().postorden();
     }
     public int anchura() {
         if (getRaiz() == null) return 0;
